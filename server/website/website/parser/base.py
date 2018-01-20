@@ -29,6 +29,7 @@ class BaseParser(object):
         self.numeric_metric_catalog_ = {m: v for m, v in \
                 self.metric_catalog_.iteritems() if \
                 v.metric_type == MetricType.COUNTER}
+        self.valid_boolean_val = list()
 
     @abstractproperty
     def base_configuration_settings(self):
@@ -84,12 +85,18 @@ class BaseParser(object):
             conv_value = None
             if metadata.vartype == VarType.BOOL:
                 conv_value = self.convert_bool(value, metadata)
+                if not self._check_knob_bool_val(conv_value):
+                    raise Exception('Knob boolean value not valid!')
             elif metadata.vartype == VarType.ENUM:
                 conv_value = self.convert_enum(value, metadata)
             elif metadata.vartype == VarType.INTEGER:
                 conv_value = self.convert_integer(value, metadata)
+                if not self._check_knob_num_in_range(conv_value):
+                    raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.REAL:
                 conv_value = self.convert_real(value, metadata)
+                if not self._check_knob_num_in_range(conv_value):
+                    raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.STRING:
                 conv_value = self.convert_string(value, metadata)
             elif metadata.vartype == VarType.TIMESTAMP:
@@ -102,6 +109,15 @@ class BaseParser(object):
                     'Param value for {} cannot be null'.format(name))
             knob_data[name] = conv_value
         return knob_data
+
+    def _check_knob_num_in_range(self, value):
+        return value >= KnobCatalog.minval and value <= KnobCatalog.maxval
+
+    def add_valid_boolean_val(self, new_val):
+        self.valid_boolean_val.append(new_val)
+
+    def _check_knob_bool_val(self, value):
+        return value in self.valid_boolean_val
 
     def convert_dbms_metrics(self, metrics, observation_time):
 #         if len(metrics) != len(self.numeric_metric_catalog_):
