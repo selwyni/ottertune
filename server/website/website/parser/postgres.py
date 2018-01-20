@@ -101,9 +101,6 @@ class PostgresParser(BaseParser):
         dbms_version = version_string.split(',')[0]
         return re.search("\d+\.\d+(?=\.\d+)", dbms_version).group(0)
 
-    def __init__(self):
-        super(BaseParser)
-        self.valid_boolean_val = ["on", "off", "true", "false", "yes", "no", 0, 1]
 
 class Postgres96Parser(PostgresParser):
 
@@ -111,3 +108,4 @@ class Postgres96Parser(PostgresParser):
         dbms = DBMSCatalog.objects.get(
             type=DBMSType.POSTGRES, version='9.6')
         super(Postgres96Parser, self).__init__(dbms.pk)
+        self.valid_boolean_val = ["on", "off", "true", "false", "yes", "no", 0, 1]
