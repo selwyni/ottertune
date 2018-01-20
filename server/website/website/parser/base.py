@@ -91,15 +91,16 @@ class BaseParser(object):
                 conv_value = self.convert_enum(value, metadata)
             elif metadata.vartype == VarType.INTEGER:
                 conv_value = self.convert_integer(value, metadata)
-                print("min, max vals are:")
-                print(KnobCatalog.minval)
-                print(KnobCatalog.maxval)
+                exn_str = 'maxval: ' + str(KnobCatalog.maxval) + 'minval: ' + str(KnobCatalog.minval) + 'conv_val: ' + str(conv_value)
                 if not self._check_knob_num_in_range(conv_value):
-                    raise Exception('Knob num value not in range!')
+                    # raise Exception('Knob num value not in range!')
+                    raise Exception(exn_str)
             elif metadata.vartype == VarType.REAL:
                 conv_value = self.convert_real(value, metadata)
+                exn_str = 'maxval: ' + str(KnobCatalog.maxval) + 'minval: ' + str(KnobCatalog.minval) + 'conv_val: ' + str(conv_value)
                 if not self._check_knob_num_in_range(conv_value):
-                    raise Exception('Knob num value not in range!')
+                    # raise Exception('Knob num value not in range!')
+                    raise Exception(exn_str)
             elif metadata.vartype == VarType.STRING:
                 conv_value = self.convert_string(value, metadata)
             elif metadata.vartype == VarType.TIMESTAMP:
