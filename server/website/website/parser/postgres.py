@@ -47,7 +47,6 @@ class PostgresParser(BaseParser):
         'global.default_text_search_config': 'pg_catalog.english',
     }
 
-
     @property
     def base_configuration_settings(self):
         return dict(self.POSTGRES_BASE_KNOBS)
