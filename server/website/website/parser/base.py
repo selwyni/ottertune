@@ -91,10 +91,8 @@ class BaseParser(object):
                 conv_value = self.convert_enum(value, metadata)
             elif metadata.vartype == VarType.INTEGER:
                 conv_value = self.convert_integer(value, metadata)
-                msg = str(KnobCatalog.maxval)
                 if not self._check_knob_num_in_range(conv_value):
-                    # raise Exception('Knob num value not in range!')
-                    raise TestExn(msg)
+                    raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.REAL:
                 conv_value = self.convert_real(value, metadata)
                 if not self._check_knob_num_in_range(conv_value):
@@ -354,7 +352,3 @@ class BaseParser(object):
     def filter_tunable_knobs(self, knobs):
         return OrderedDict([(k, v) for k, v in knobs.iteritems() if \
                             k in self.tunable_knob_catalog_])
-
-class TestExn(Exception):
-    def __init__(self, msg):
-        Exception.__init__(self, msg)
