@@ -14,6 +14,9 @@ from website.models import KnobCatalog, MetricCatalog
 from website.settings import CONFIG_DIR
 from website.types import BooleanType, MetricType, VarType
 
+import logging
+log = logging.getLogger(__name__)
+
 class BaseParser(object):
 
     __metaclass__ = ABCMeta
@@ -95,6 +98,8 @@ class BaseParser(object):
                     print(conv_value)
                     print(KnobCatalog.maxval)
                     print(KnobCatalog.minval)
+                    logmsg = str(conv_value) + ', ' + str(KnobCatalog.maxval)
+                    log.warn(logmsg)
                     raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.REAL:
                 conv_value = self.convert_real(value, metadata)
@@ -102,6 +107,8 @@ class BaseParser(object):
                     print(conv_value)
                     print(KnobCatalog.maxval)
                     print(KnobCatalog.minval)
+                    logmsg = str(conv_value) + ', ' + str(KnobCatalog.maxval)
+                    log.warn(logmsg)
                     raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.STRING:
                 conv_value = self.convert_string(value, metadata)
