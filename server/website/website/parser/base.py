@@ -95,20 +95,18 @@ class BaseParser(object):
             elif metadata.vartype == VarType.INTEGER:
                 conv_value = self.convert_integer(value, metadata)
                 if not self._check_knob_num_in_range(conv_value):
-                    print(conv_value)
-                    print(KnobCatalog.maxval)
-                    print(KnobCatalog.minval)
-                    logmsg = str(conv_value) + ', ' + str(KnobCatalog.maxval)
+                    logmsg = str(conv_value)
                     log.warn(logmsg)
+                    logmsg2 = str(KnobCatalog.maxval)
+                    log.warn(logmsg2)
                     raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.REAL:
                 conv_value = self.convert_real(value, metadata)
                 if not self._check_knob_num_in_range(conv_value):
-                    print(conv_value)
-                    print(KnobCatalog.maxval)
-                    print(KnobCatalog.minval)
-                    logmsg = str(conv_value) + ', ' + str(KnobCatalog.maxval)
+                    logmsg = str(conv_value)
                     log.warn(logmsg)
+                    logmsg2 = str(KnobCatalog.maxval)
+                    log.warn(logmsg2)
                     raise Exception('Knob num value not in range!')
             elif metadata.vartype == VarType.STRING:
                 conv_value = self.convert_string(value, metadata)
