@@ -98,7 +98,7 @@ class BaseParser(object):
                     raise Exception('Knob boolean value not valid! '
                                     'Boolean values should be one of: {}, '
                                     'but the actual value is: {}'
-                                    .format(self.valid_boolean_val_to_string(), 
+                                    .format(self.valid_boolean_val_to_string(),
                                             str(value)))
                 conv_value = self.convert_bool(value, metadata)
             elif metadata.vartype == VarType.ENUM:
